@@ -4,14 +4,23 @@ import (
 	"backend/internal/handler"
 	"backend/internal/handler/middleware"
 	"backend/internal/handler/router"
+	"backend/internal/infra/ent"
 	"backend/internal/infra/repository"
 	"backend/internal/usecase"
 	"backend/pkg/config"
+	"log/slog"
 	"net/http"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func setupHandler(cfg *config.Config) http.Handler {
-	userRepo := repository.NewUserRepository()
+	client, err := ent.Open("mysql", cfg.DatabaseURL)
+	if err != nil {
+		slog.Error("failed opening connection to mysql", "error", err)
+	}
+
+	userRepo := repository.NewUserRepository(client)
 	userUseCase := usecase.NewUserUseCase(userRepo)
 	userHandler := handler.NewUserHandler(userUseCase)
 

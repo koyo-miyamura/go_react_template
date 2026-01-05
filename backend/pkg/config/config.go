@@ -11,6 +11,7 @@ type Config struct {
 	Env           string `env:"ENV,default=development"`
 	BasicAuthUser string `env:"BASIC_AUTH_USER,default=koyo"`
 	BasicAuthPass string `env:"BASIC_AUTH_PASS,default=miyamu"`
+	DatabaseURL   string `env:"DATABASE_URL,default=root@tcp(db:3306)/template_db?parseTime=true"`
 }
 
 func MustLoadConfig() *Config {

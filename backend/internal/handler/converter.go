@@ -9,7 +9,7 @@ import (
 func usersFromDomain(domainUsers []domain.User) []User {
 	return lo.Map(domainUsers, func(du domain.User, _ int) User {
 		return User{
-			Id:    du.ID,
+			Id:    int(du.ID),
 			Name:  du.Name,
 			Email: du.Email,
 		}

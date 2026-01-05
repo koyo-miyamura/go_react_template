@@ -6,6 +6,10 @@ run:
 frontend_exec:
 	docker compose exec frontend bash
 
+.PHONY: backend_exec
+backend_exec:
+	docker compose exec backend bash
+
 .PHONY: setup_without_user
 setup_without_user: setup_frontend
 
@@ -35,3 +39,19 @@ build_all:
 .PHONY: run_image
 run_image:
 	docker run -p 8080:8080 go-react-app
+
+.PHONY: generate_ent
+generate_ent:
+	docker compose run --rm backend go generate ./internal/infra/ent
+
+.PHONY: generate_migration_diff
+generate_migration_diff:
+	docker compose run --rm backend atlas migrate diff --env local
+
+.PHONY: apply_migration
+apply_migration:
+	docker compose run --rm backend atlas migrate apply --env local
+
+.PHONY: migration_status
+migration_status:
+	docker compose run --rm backend atlas migrate status --env local

@@ -24,3 +24,18 @@ services:
     ports:
       - "8080:8080"
     command: go run ./cmd/server
+    depends_on:
+        - db
+
+  db:
+    image: mysql:8.0
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./docker_dev/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - '3306:3306'
+
+volumes:
+  mysql:

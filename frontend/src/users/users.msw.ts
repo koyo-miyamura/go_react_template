@@ -23,7 +23,7 @@ import type {
 } from '.././model';
 
 
-export const getGetApiUsersResponseMock = (overrideResponse: Partial< GetUsersResponse > = {}): GetUsersResponse => ({users: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({id: faker.string.alpha({length: {min: 10, max: 20}}), name: faker.string.alpha({length: {min: 10, max: 20}}), email: faker.string.alpha({length: {min: 10, max: 20}})})), ...overrideResponse})
+export const getGetApiUsersResponseMock = (overrideResponse: Partial< GetUsersResponse > = {}): GetUsersResponse => ({users: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha({length: {min: 10, max: 20}}), email: faker.string.alpha({length: {min: 10, max: 20}})})), ...overrideResponse})
 
 
 export const getGetApiUsersMockHandler = (overrideResponse?: GetUsersResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<GetUsersResponse> | GetUsersResponse), options?: RequestHandlerOptions) => {
