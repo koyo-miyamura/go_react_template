@@ -55,3 +55,7 @@ apply_migration:
 .PHONY: migration_status
 migration_status:
 	docker compose run --rm backend atlas migrate status --env local
+
+.PHONY: seed
+seed:
+	docker compose run --rm backend go run ./cmd/seed/main.go
